@@ -5,7 +5,8 @@ It's not super relevant to the field I would like to work in one day, bioinforma
 
 There's essentially 3 parts:
 
-The front end HTML jsp files that code for what the website looks like, as well as containing Java scriptlets that communicate with the back end
-Back end supporting java code for the scriptlets
-SQL code that initialized the database tables, as well as the views, triggers, and indices
+- The front end HTML jsp files that code for what the website looks like, as well as containing Java scriptlets that communicate with the back end
+- Back end supporting java code for the scriptlets
+- SQL code that initialized the database tables, as well as the views, triggers, and indices
+
 This code used Apache Tomcat to run the server on, and I think that's the only plug in used.
