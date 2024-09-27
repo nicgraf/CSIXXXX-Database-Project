@@ -1,0 +1,298 @@
+set search_path = 'Project'
+
+'''Populating Hotel_Chain'''
+INSERT INTO Hotel_Chain (chain_name, street_number, street_name, office_number, city, province, postal_code, no_of_hotels, email_address)
+VALUES
+    ('Chain1', 123, 'Main St', 1, 'Toronto', 'Ontario', 'A1B2C3', 0, 'chain1@example.com'),
+    ('Chain2', 456, 'First Ave', 2, 'Montreal', 'Quebec', 'D4E5F6', 0, 'chain2@example.com'),
+    ('Chain3', 789, 'Broadway', 3, 'Vancouver', 'British Columbia', 'G7H8I9', 0, 'chain3@example.com'),
+    ('Chain4', 1011, 'Elm St', 4, 'Calgary', 'Alberta', 'J1K2L3', 0, 'chain4@example.com'),
+    ('Chain5', 1213, 'Maple Ave', 5, 'Halifax', 'Nova Scotia', 'M4N5O6', 0, 'chain5@example.com');
+
+'''Populating Hotel_Employees with managers'''
+INSERT INTO Hotel_Employee (emp_ID, SIN, first_name, last_name, street_number, street_name, city, postal_code, email_address)
+VALUES
+(1, 123456789, 'John', 'Smith', 10, 'Main St', 'Toronto', 'A1B2C3', 'john.smith@example.com'),
+(2, 234567890, 'Jane', 'Doe', 20, 'First Ave', 'Montreal', 'D4E5F6', 'jane.doe@example.com'),
+(3, 345678901, 'Michael', 'Johnson', 30, 'Broadway', 'Vancouver', 'G7H8I9', 'michael.johnson@example.com'),
+(4, 456789012, 'Emily', 'Brown', 40, 'Elm St', 'Calgary', 'J1K2L3', 'emily.brown@example.com'),
+(5, 567890123, 'David', 'Taylor', 50, 'Maple Ave', 'Halifax', 'M4N5O6', 'david.taylor@example.com'),
+(6, 678901234, 'Sarah', 'Anderson', 60, 'Oak St', 'Ottawa', 'P7Q8R9', 'sarah.anderson@example.com'),
+(7, 789012345, 'Matthew', 'Martinez', 70, 'Pine St', 'Victoria', 'S1T2U3', 'matthew.martinez@example.com'),
+(8, 890123456, 'Jessica', 'Garcia', 80, 'Cedar Ave', 'Winnipeg', 'V4W5X6', 'jessica.garcia@example.com'),
+(9, 901234567, 'William', 'Lopez', 90, 'Birch St', 'Quebec City', 'Y7Z8A9', 'william.lopez@example.com'),
+(10, 112233445, 'Ashley', 'Hernandez', 100, 'Spruce Ave', 'Edmonton', 'B1C2D3', 'ashley.hernandez@example.com'),
+(11, 223344556, 'Christopher', 'Hill', 110, 'Fir St', 'Regina', 'E4F5G6', 'christopher.hill@example.com'),
+(12, 334455667, 'Amanda', 'Young', 120, 'Willow Ave', 'Saskatoon', 'H7I8J9', 'amanda.young@example.com'),
+(13, 445566778, 'James', 'King', 130, 'Larch St', 'Charlottetown', 'K1L2M3', 'james.king@example.com'),
+(14, 556677889, 'Stephanie', 'Scott', 140, 'Juniper Ave', 'Fredericton', 'N4O5P6', 'stephanie.scott@example.com'),
+(15, 667788990, 'Ryan', 'Adams', 150, 'Cypress St', 'St. John', 'Q7R8S9', 'ryan.adams@example.com'),
+(16, 778899001, 'Melissa', 'Baker', 160, 'Chestnut Ave', 'Whitehorse', 'T1U2V3', 'melissa.baker@example.com'),
+(17, 889900112, 'Daniel', 'Morris', 170, 'Mulberry St', 'Yellowknife', 'W4X5Y6', 'daniel.morris@example.com'),
+(18, 990011223, 'Nicole', 'Ward', 180, 'Poplar Ave', 'Iqaluit', 'Z7A8B9', 'nicole.ward@example.com'),
+(19, 112233445, 'Kevin', 'Rivera', 190, 'Redwood St', 'Thunder Bay', 'C1D2E3', 'kevin.rivera@example.com'),
+(20, 224466880, 'Hannah', 'Torres', 200, 'Sequoia Ave', 'Sudbury', 'F4G5H6', 'hannah.torres@example.com'),
+(21, 336699002, 'Andrew', 'Peterson', 210, 'Beech St', 'Barrie', 'I7J8K9', 'andrew.peterson@example.com'),
+(22, 449911223, 'Olivia', 'Gonzalez', 220, 'Palm Ave', 'London', 'M1N2O3', 'olivia.gonzalez@example.com'),
+(23, 552233445, 'Jacob', 'Nelson', 230, 'Maple St', 'Manchester', 'P4Q5R6', 'jacob.nelson@example.com'),
+(24, 664455667, 'Megan', 'Carter', 240, 'Oak Ave', 'Birmingham', 'S7T8U9', 'megan.carter@example.com'),
+(25, 776688990, 'Tyler', 'Perez', 250, 'Pine St', 'Liverpool', 'V1W2X3', 'tyler.perez@example.com'),
+(26, 889900112, 'Rachel', 'Howard', 260, 'Cedar St', 'Bristol', 'Y4Z5A6', 'rachel.howard@example.com'),
+(27, 991122334, 'Brandon', 'Nguyen', 270, 'Elm Ave', 'Leeds', 'B1C2D3', 'brandon.nguyen@example.com'),
+(28, 112233445, 'Lauren', 'Watson', 280, 'Sycamore St', 'Glasgow', 'E4F5G6', 'lauren.watson@example.com'),
+(29, 224466880, 'Austin', 'Rossi', 290, 'Birch Ave', 'Edinburgh', 'H7I8J9', 'austin.rossi@example.com'),
+(30, 336699002, 'Taylor', 'Gomez', 300, 'Willow St', 'Cardiff', 'K1L2M3', 'taylor.gomez@example.com'),
+(31, 449911223, 'Kayla', 'Patel', 310, 'Cypress Ave', 'Dublin', 'N4O5P6', 'kayla.patel@example.com'),
+(32, 552233445, 'Zachary', 'Lee', 320, 'Juniper St', 'Belfast', 'Q7R8S9', 'zachary.lee@example.com'),
+(33, 664455667, 'Samantha', 'Kumar', 330, 'Larch Ave', 'Manchester', 'T1U2V3', 'samantha.kumar@example.com'),
+(34, 776688990, 'Cody', 'Fernandez', 340, 'Mulberry St', 'London', 'W4X5Y6', 'cody.fernandez@example.com'),
+(35, 889900112, 'Vanessa', 'Martin', 350, 'Oak St', 'Liverpool', 'Z7A8B9', 'vanessa.martin@example.com'),
+(36, 991122334, 'Austin', 'Lopez', 360, 'Pine Ave', 'Bristol', 'C1D2E3', 'austin.lopez@example.com'),
+(37, 112233445, 'Courtney', 'Gonzalez', 370, 'Cedar Ave', 'Leeds', 'F4G5H6', 'courtney.gonzalez@example.com'),
+(38, 224466880, 'Jared', 'Lee', 380, 'Elm St', 'Glasgow', 'I7J8K9', 'jared.lee@example.com'),
+(39, 336699002, 'Alexis', 'Nguyen', 390, 'Sycamore Ave', 'Edinburgh', 'M1N2O3', 'alexis.nguyen@example.com'),
+(40, 449911223, 'Cameron', 'Rossi', 400, 'Birch St', 'Cardiff', 'P4Q5R6', 'cameron.rossi@example.com');
+
+delete from Hotel
+
+'''Populating Hotels'''
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES
+	(1, 'Chain1', 1, 1, 123, 'First St', 'Toronto', 'Ontario', 'A2B2C3', 'chain11@example.com', 100, 50),
+	(2, 'Chain1', 2, 2, 124, 'Second St', 'Toronto', 'Ontario', 'A1F2Z3', 'chain12@example.com', 120, 60),
+	(3, 'Chain1', 3, 3, 125, 'Third St', 'Toronto', 'Ontario', 'A1B8Z3', 'chain13@example.com', 110, 55),
+	(4, 'Chain1', 4, 4, 126, 'Fourth St', 'Toronto', 'Ontario', 'J1B2C8', 'chain14@example.com', 130, 65),
+	(5, 'Chain1', 5, 5, 127, 'Fifth St', 'Toronto', 'Ontario', 'V1B2Y3', 'chain15@example.com', 105, 52),
+	(6, 'Chain1', 6, 1, 128, 'Sixth St', 'Toronto', 'Ontario', 'V1B5C3', 'chain16@example.com', 115, 57),
+	(7, 'Chain1', 7, 3, 129, 'Seventh St', 'Toronto', 'Ontario', 'X1B2C3', 'chain17@example.com', 125, 62),
+	(8, 'Chain1', 8, 4, 130, 'Eighth St', 'Toronto', 'Ontario', 'W1B2C3', 'chain18@example.com', 135, 67);
+		
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES
+	(9, 'Chain2', 9, 1, 123, 'First St', 'Montreal', 'Ontario', 'J1B5C3', 'chain29@example.com', 100, 50),
+	(10, 'Chain2', 10, 2, 124, 'Second St', 'Montreal', 'Ontario', 'L1B2C6', 'chain210@example.com', 120, 60),
+	(11, 'Chain2', 11, 3, 125, 'Third St', 'Montreal', 'Ontario', 'A1C2K9', 'chain211@example.com', 110, 55),
+	(12, 'Chain2', 12, 4, 126, 'Fourth St', 'Montreal', 'Ontario', 'M1C3F3', 'chain212@example.com', 130, 65),
+	(13, 'Chain2', 13, 5, 127, 'Fifth St', 'Montreal', 'Ontario', 'A1B6C3', 'chain213@example.com', 105, 52),
+	(14, 'Chain2', 14, 1, 128, 'Sixth St', 'Montreal', 'Ontario', 'N1B2C3', 'chain214@example.com', 115, 57),
+	(15, 'Chain2', 15, 3, 129, 'Seventh St', 'Montreal', 'Ontario', 'Q1B5N3', 'chain215@example.com', 125, 62),
+	(16, 'Chain2', 16, 4, 130, 'Eighth St', 'Montreal', 'Ontario', 'Q1B6C3', 'chain216@example.com', 135, 67);
+	
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES
+	(17, 'Chain3',17, 1, 123, 'First St', 'Vancouver', 'British Columbia', 'J1H5C3', 'chain317@example.com', 100, 50),
+	(18, 'Chain3', 18, 2, 124, 'Second St', 'Vancouver', 'British Columbia', 'T1B2C6', 'chain318@example.com', 120, 60),
+	(19, 'Chain3', 19, 3, 125, 'Third St', 'Vancouver', 'British Columbia', 'A1I2K9', 'chain319@example.com', 110, 55),
+	(20, 'Chain3', 20, 4, 126, 'Fourth St', 'Vancouver', 'British Columbia', 'M1K3F3', 'chain320@example.com', 130, 65),
+	(21, 'Chain3', 21, 5, 127, 'Fifth St', 'Vancouver', 'British Columbia', 'A1M6C3', 'chain321@example.com', 105, 52),
+	(22, 'Chain3', 22, 1, 128, 'Sixth St', 'Vancouver', 'British Columbia', 'N1P2C3', 'chain322@example.com', 115, 57),
+	(23, 'Chain3', 23, 3, 129, 'Seventh St', 'Vancouver', 'British Columbia', 'Q1B5H3', 'chain323@example.com', 125, 62),
+	(24, 'Chain3', 24, 4, 130, 'Eighth St', 'Vancouver', 'British Columbia', 'Q1B6U3', 'chain324@example.com', 135, 67);
+	
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES
+	(25, 'Chain4', 25, 1, 123, 'First St', 'Edmonton', 'Alberta', 'J1G5C3', 'chain425@example.com', 100, 50),
+	(26, 'Chain4', 26, 2, 124, 'Second St', 'Edmonton', 'Alberta', 'T1N2C6', 'chain426@example.com', 120, 60),
+	(27, 'Chain4', 27, 3, 125, 'Third St', 'Edmonton', 'Alberta', 'A8I2K9', 'chain427@example.com', 110, 55),
+	(28, 'Chain4', 28, 4, 126, 'Fourth St', 'Edmonton', 'Alberta', 'M1K7F3', 'chain428@example.com', 130, 65),
+	(29, 'Chain4', 29, 5, 127, 'Fifth St', 'Edmonton', 'Alberta', 'A3M6C3', 'chain429@example.com', 105, 52),
+	(30, 'Chain4', 30, 1, 128, 'Sixth St', 'Edmonton', 'Alberta', 'N1P2Z3', 'chain430@example.com', 115, 57),
+	(31, 'Chain4', 31, 3, 129, 'Seventh St', 'Edmonton', 'Alberta', 'Z1B5H3', 'chain431@example.com', 125, 62),
+	(32, 'Chain4', 32, 4, 130, 'Eighth St', 'Edmonton', 'Alberta', 'Q1Y6U3', 'chain432@example.com', 135, 67);
+
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES
+	(33, 'Chain5', 33, 1, 123, 'First St', 'Halifax', 'Nova Scotia', 'J1B5C3', 'chain533@example.com', 100, 50),
+	(34, 'Chain5', 34, 2, 124, 'Second St', 'Halifax', 'Nova Scotia', 'T9N2C6', 'chain534@example.com', 120, 60),
+	(35, 'Chain5', 35, 3, 125, 'Third St', 'Halifax', 'Nova Scotia', 'A8I2Z9', 'chain535@example.com', 110, 55),
+	(36, 'Chain5', 36, 4, 126, 'Fourth St', 'Halifax', 'Nova Scotia', 'X1K7F3', 'chain536@example.com', 130, 65),
+	(37, 'Chain5', 37, 5, 127, 'Fifth St', 'Halifax', 'Nova Scotia', 'A3V6C3', 'chain537@example.com', 105, 52),
+	(38, 'Chain5', 38, 1, 128, 'Sixth St', 'Halifax', 'Nova Scotia', 'N1P2H3', 'chain538@example.com', 115, 57),
+	(39, 'Chain5', 39, 3, 129, 'Seventh St', 'Halifax', 'Nova Scotia', 'V1B2H3', 'chain539@example.com', 125, 62),
+	(40, 'Chain5', 40, 4, 130, 'Eighth St', 'Halifax', 'Nova Scotia', 'Q1Y2U3', 'chain540@example.com', 135, 67);
+
+'''Populating Roles'''
+DO $$ 
+DECLARE
+    i INTEGER;
+BEGIN
+    FOR i IN 1..40 LOOP
+        INSERT INTO Role(role_ID, title)
+        VALUES (i, 'Chain ' || ((i - 1) / 8 + 1) || ' Hotel ' || ((i - 1) % 8 + 1) || ' Manager');
+    END LOOP;
+END $$;
+
+'''Populating Rooms'''
+DO $$
+DECLARE
+    hotel_id INTEGER;
+    room_number INTEGER;
+BEGIN
+    FOR hotel_id IN 1..40 LOOP
+        FOR room_number IN 1..5 LOOP
+            INSERT INTO Room(room_number, hotel_ID, price, available, tv, ac, fridge, wifi, view, capacity, extendable)
+            VALUES (
+                room_number,
+                hotel_id,
+                ROUND(RANDOM() * 1000 * 100) / 100, -- Random price between 0 and 1000 rounded to 2 decimal places
+                TRUE, -- Assume all rooms are available initially
+                RANDOM() < 0.5, -- Random TV availability
+                RANDOM() < 0.5, -- Random AC availability
+                RANDOM() < 0.5, -- Random fridge availability
+                RANDOM() < 0.5, -- Random wifi availability
+                CASE ROUND(RANDOM() * 5)
+                    WHEN 0 THEN 'mountain'
+                    WHEN 1 THEN 'sea'
+                    WHEN 2 THEN 'city'
+                    WHEN 3 THEN 'garden'
+                    WHEN 4 THEN 'patio'
+                    ELSE 'pool'
+                END, -- Random view
+                CAST(ROUND(RANDOM() * 3 + 1) AS INTEGER), -- Random capacity between 1 and 4
+                RANDOM() < 0.5 -- Random extendable availability
+            );
+        END LOOP;
+    END LOOP;
+END $$;
+
+'''Populating Works'''
+DO $$
+DECLARE
+	i integer;
+BEGIN
+	FOR i IN 1..40 LOOP
+		INSERT INTO Works(role_ID, hotel_ID, emp_ID)
+		VALUES (i, i, i);
+	END LOOP;
+END $$;
+
+'''Populating Bookings'''
+DO $$
+DECLARE
+    i INTEGER;
+    hotel_count INTEGER;
+    room_count INTEGER;
+    check_in_date DATE;
+    check_out_date DATE;
+BEGIN
+    SELECT COUNT(DISTINCT hotel_ID) INTO hotel_count FROM Room;
+    SELECT COUNT(*) INTO room_count FROM Room;
+
+    FOR i IN 1..10 LOOP
+
+        -- Generate random check-in and check-out dates within a reasonable range
+        check_in_date := '2024-04-01'::DATE + (FLOOR(RANDOM() * 30) || ' days')::INTERVAL;
+        check_out_date := check_in_date + (FLOOR(RANDOM() * 7) + 1 || ' days')::INTERVAL;
+
+        INSERT INTO Bookings(book_ID, cust_ID, hotel_ID, room_number, check_in, check_out)
+        VALUES (
+            i,
+            i,
+            FLOOR(RANDOM() * 40) + 1,
+            FLOOR(RANDOM() * 4) + 1,
+            check_in_date,
+            check_out_date
+        );
+    END LOOP;
+END $$;
+
+'''Populating Customers'''
+DO $$
+DECLARE
+    i INTEGER;
+    dob DATE;
+BEGIN
+    FOR i IN 11..20 LOOP
+        -- Generate random date of birth between 1950-01-01 and 2003-01-01
+        dob := '1950-01-01'::DATE + (FLOOR(RANDOM() * (DATE '2003-01-01' - DATE '1950-01-01')) || ' days')::INTERVAL;
+
+        INSERT INTO Customer(cust_ID, registration_date, DOB, ID_type, ID, first_name, last_name, street_number, street_name, city, province, postal_code, email_address)
+        VALUES (
+            i,
+            CURRENT_DATE, -- Use current date as registration date
+            dob,
+            'SomeType', -- Example ID type
+            'SomeID', -- Example ID
+            'FirstName' || i::TEXT, -- Example first name
+            'LastName' || i::TEXT, -- Example last name
+            FLOOR(RANDOM() * 100) + 1, -- Random street number between 1 and 100
+            'StreetName', -- Example street name
+            'CityName', -- Example city name
+            'ProvinceName', -- Example province name
+            'A1B2C3', -- Example postal code
+            'email@example.com' -- Example email address
+        );
+    END LOOP;
+END $$;
+
+'''Populating Rentings'''
+DO $$
+DECLARE
+    i INTEGER;
+    hotel_count INTEGER;
+    room_count INTEGER;
+    check_in_date DATE;
+    check_out_date DATE;
+BEGIN
+    SELECT COUNT(DISTINCT hotel_ID) INTO hotel_count FROM Room;
+    SELECT COUNT(*) INTO room_count FROM Room;
+
+    FOR i IN 11..20 LOOP
+
+        -- Generate random check-in and check-out dates within a reasonable range
+        check_in_date := '2024-04-01'::DATE + (FLOOR(RANDOM() * 30) || ' days')::INTERVAL;
+        check_out_date := check_in_date + (FLOOR(RANDOM() * 7) + 1 || ' days')::INTERVAL;
+
+        INSERT INTO Rentings(rent_ID, cust_ID, hotel_ID, room_number, check_in, check_out)
+        VALUES (
+            i,
+            i,
+            FLOOR(RANDOM() * 40) + 1,
+            FLOOR(RANDOM() * 4) + 1,
+            check_in_date,
+            check_out_date
+        );
+    END LOOP;
+END $$;
+
+'''Populating Room_Damages'''
+DO $$
+DECLARE
+    i INTEGER;
+    hotel_id INTEGER;
+    room_number INTEGER;
+    damage_types VARCHAR[] := ARRAY['Mould', 'Wall_Damage', 'Stains', 'Broken_Furniture', 'Broken_TV', 'Other'];
+BEGIN
+    FOR i IN 1..15 LOOP
+        -- Generate random hotel and room numbers
+        hotel_id := FLOOR(RANDOM() * 40) + 1; -- Random hotel ID between 1 and 40
+        room_number := FLOOR(RANDOM() * 5) + 1; -- Random room number between 1 and 5
+
+        INSERT INTO Room_Damages(damage_ID, room_number, hotel_ID, damage_type)
+        VALUES (
+            i,
+            room_number,
+            hotel_id,
+            damage_types[FLOOR(RANDOM() * 6) + 1] -- Randomly select a damage type from the array
+        );
+    END LOOP;
+END $$;
+
+'''Populating Phone numbers'''
+DO $$
+DECLARE
+    i INTEGER;
+BEGIN
+    FOR i IN 1..40 LOOP
+
+        INSERT INTO Phone_Numbers(phone_number, chain_name, hotel_ID, emp_ID, phone_type)
+        VALUES (
+            FLOOR(RANDOM() * (9999999 - 1000000 + 1) + 1000000),
+			NULL,
+			NULL,
+			i,
+			'work phone'
+        );
+    END LOOP;
+END $$;
+select * from phone_numbers

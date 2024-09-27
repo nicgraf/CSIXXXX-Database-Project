@@ -1,0 +1,13 @@
+set search_path = 'Project'
+
+CREATE VIEW Availability_by_area AS
+Select count(*), city
+From Room natural join Hotel
+where available = true
+Group by city
+
+CREATE VIEW Capacity_by_Hotel AS
+Select sum(capacity), hotel_ID
+From Room natural join Hotel
+Group by hotel_ID
+

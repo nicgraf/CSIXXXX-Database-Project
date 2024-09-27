@@ -1,0 +1,54 @@
+set search_path = 'Project'
+
+'''User defined constraints'''
+
+'''Postal code integrity constraint'''
+INSERT INTO Hotel_Chain VALUES ('Chain69', 1, 'Oak st', 23, 'Calgary', 'Alberta', '1J2K3L', 0, 'chain69@gmail.com')
+
+'''Room View and Capacity Constraint'''
+INSERT INTO Room VALUES (1, 7, 200.00, true, true , true, true, true, 'dungeon', 4, true)
+INSERT INTO Room VALUES (1, 7, 200.00, true, true , true, true, true, 'mountain', 5, true)
+
+'''Restrict Deleting Manager'''
+DELETE FROM Hotel_Employee WHERE emp_ID = '1'
+
+'''Cascading delete Hotel'''
+INSERT INTO Hotel (hotel_ID, chain_name, manag_ID, star_rating, street_number, street_name, city, province, postal_code, email_address, no_of_rooms, no_of_employees)
+VALUES (41, 'Chain1', 1, 3, 123, 'Fake Street', 'Fake City', 'Fake Province', 'A1B2C3', 'fake@email.com', 100, 50);
+
+INSERT INTO Room (room_number, hotel_ID, price, available, tv, ac, fridge, wifi, view, capacity, extendable)
+VALUES
+(101, 41, 100.00, true, true, true, true, true, 'mountain', 2, true),
+(102, 41, 120.00, true, true, true, true, true, 'sea', 2, true),
+(103, 41, 150.00, true, true, true, true, true, 'city', 2, true),
+(104, 41, 200.00, true, true, true, true, true, 'garden', 2, true),
+(105, 41, 180.00, true, true, true, true, true, 'patio', 2, true);
+
+Select * from Room where hotel_ID = 41
+Delete from Hotel where hotel_ID = 41
+
+'''Some Queries'''
+SELECT * FROM Room where available = true
+SELECT * FROM Hotel where city = 'Montreal'
+SELECT * FROM Room where (hotel_ID, room_number) in 
+(Select hotel_ID, room_number from Room EXCEPT Select hotel_ID, room_number from Room_Damages)
+
+
+'''Triggers'''
+
+'''Renting restricts availability of Room and Renting Archive'''
+Select * From Rentings_Archive where cust_id = 14
+Select price, available from Room where Hotel_ID = 3 AND room_number = 1
+INSERT INTO Rentings VALUES (73, 14, 3, 1, DATE '2024-04-03', DATE '2024-04-06')
+Delete from Rentings where rent_ID = 73
+
+'''No of hotels trigger'''
+Select no_of_hotels from Hotel_Chain where chain_name = 'Chain1'
+Insert into Hotel VALUES (41, 'Chain1', 8, 4, 130, 'Eighth St', 'Toronto', 'Ontario', 'W1B2C3', 'chain18@example.com', 135, 67);
+Delete from Hotel where hotel_ID = 41
+
+'''No of employees trigger'''
+Select no_of_employees from Hotel where hotel_ID = 1
+INSERT INTO Works VALUES (41, 1, 2)
+DELETE FROM Works Where role_ID = 41
+

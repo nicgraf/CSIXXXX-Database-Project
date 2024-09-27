@@ -1,0 +1,306 @@
+set search_path = "Project"
+
+create table Hotel_Chain(
+	chain_name varchar(20) PRIMARY KEY,
+	street_number integer,
+	street_name varchar(20),
+	office_number integer,
+	city varchar(20),
+	province varchar(20),
+	postal_code char(6),
+	no_of_hotels integer,
+	email_address varchar(20),
+	CHECK (postal_code = UPPER(postal_code) AND postal_code similar to '_[0-9]_[0-9]_[0-9]')
+)
+
+'''Trigger that updates hotel chain number of hotels'''
+CREATE OR REPLACE FUNCTION update_hotel_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE Hotel_Chain
+        SET no_of_hotels = no_of_hotels + 1
+        WHERE chain_name = NEW.chain_name;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE Hotel_Chain
+        SET no_of_hotels = no_of_hotels - 1
+        WHERE chain_name = OLD.chain_name;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_hotel_count_trigger
+AFTER INSERT OR DELETE ON Hotel
+FOR EACH ROW
+EXECUTE FUNCTION update_hotel_count();
+
+
+
+create table Hotel_Employee(
+	emp_ID integer PRIMARY KEY,
+	SIN integer NOT NULL,
+	first_name varchar(20) NOT NULL,
+	last_name varchar(20),
+	street_number integer,
+	street_name varchar(20),
+	city varchar(20),
+	postal_code char(6),
+	email_address varchar(30),
+	CHECK (postal_code = UPPER(postal_code) AND postal_code similar to '_[0-9]_[0-9]_[0-9]')
+)
+
+create table Hotel(
+	hotel_ID integer PRIMARY KEY,
+	chain_name varchar(20) references Hotel_chain ON DELETE SET NULL,
+	manag_ID integer references Hotel_Employee ON DELETE RESTRICT,
+	star_rating integer,
+	street_number integer,
+	street_name varchar(20),
+	city varchar(20),
+	province varchar(20),
+	postal_code char(6),
+	email_address varchar(20),
+	no_of_rooms integer,
+	no_of_employees integer,
+	check (star_rating between 1 and 5),
+	CHECK (postal_code = UPPER(postal_code) AND postal_code similar to '_[0-9]_[0-9]_[0-9]')
+)
+
+'''trigger that updates amount of employees in hotel'''
+CREATE OR REPLACE FUNCTION update_hotel_employee_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE Hotel
+        SET no_of_employees = no_of_employees + 1
+        WHERE hotel_id = NEW.hotel_id;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE Hotel
+        SET no_of_employees = no_of_employees - 1
+        WHERE hotel_id = OLD.hotel_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_employee_count_trigger
+AFTER INSERT OR DELETE ON Works
+FOR EACH ROW
+EXECUTE FUNCTION update_hotel_employee_count();
+
+DROP TRIGGER update_employee_count_trigger ON Works;
+DROP FUNCTION update_hotel_employee_count();
+'''trigger that updates hotel room count whenever a new room is added'''
+CREATE OR REPLACE FUNCTION update_hotel_room_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        UPDATE Hotel
+        SET no_of_rooms = no_of_rooms + 1
+        WHERE id = NEW.hotel_id;
+    ELSIF TG_OP = 'DELETE' THEN
+        UPDATE Hotel
+        SET no_of_rooms = no_of_rooms - 1
+        WHERE id = OLD.hotel_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_room_count_trigger
+AFTER INSERT OR DELETE ON Room
+FOR EACH ROW
+EXECUTE FUNCTION update_hotel_room_count();
+
+
+create table Role(
+	role_ID integer PRIMARY KEY,
+	title varchar(30) NOT NULL
+)
+
+create table Works(
+	role_ID integer REFERENCES Role NOT NULL,
+	hotel_ID integer REFERENCES Hotel NOT NULL,
+	emp_ID integer REFERENCES Hotel_Employee NOT NULL
+)
+
+create table Room(
+	room_number integer,
+	hotel_ID integer REFERENCES HOTEL ON DELETE CASCADE,
+	price numeric(6,2),
+	available boolean NOT NULL,
+	tv boolean,
+	ac boolean,
+	fridge boolean,
+	wifi boolean,
+	view varchar(20),
+	capacity integer,
+	extendable boolean,
+	PRIMARY KEY (room_number, hotel_ID),
+	check (capacity between 1 and 4),
+	check  (view in ('mountain', 'sea', 'city', 'garden', 'patio', 'pool'))
+)
+
+'''Trigger that updates room availability'''
+CREATE OR REPLACE FUNCTION update_room_availability()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM Rentings
+        WHERE (hotel_ID,room_number) = (NEW.hotel_ID, NEW.room_number)
+    ) THEN
+        UPDATE Room
+        SET available = FALSE
+        WHERE (hotel_ID,room_number) = (NEW.hotel_ID, NEW.room_number);
+    ELSE
+        UPDATE Room
+        SET available = TRUE
+        WHERE (hotel_ID,room_number) = (NEW.hotel_ID, NEW.room_number);
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM Rentings
+        WHERE (hotel_ID,room_number) = (OLD.hotel_ID, OLD.room_number)
+    ) THEN
+        UPDATE Room
+        SET available = TRUE
+        WHERE (hotel_ID,room_number) = (OLD.hotel_ID, OLD.room_number);
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_room_availability_trigger1
+AFTER INSERT or DELETE ON Rentings
+FOR EACH ROW
+EXECUTE FUNCTION update_room_availability();
+
+create table Room_Damages(
+	damage_ID integer PRIMARY KEY,
+	room_number integer,
+	hotel_ID integer,
+	damage_type varchar(30) NOT NULL,
+	FOREIGN KEY (room_number, hotel_ID) REFERENCES Room(room_number, hotel_ID) ON DELETE CASCADE
+)
+
+create table Bookings(
+	book_ID integer PRIMARY KEY,
+	cust_ID integer REFERENCES Customer ON DELETE CASCADE,
+	hotel_ID integer,
+	room_number integer,
+	check_in date NOT NULL,
+	check_out date NOT NULL,
+	FOREIGN KEY (room_number, hotel_ID) REFERENCES Room ON DELETE CASCADE
+)
+
+create table Rentings(
+	rent_ID integer PRIMARY KEY,
+	cust_ID integer REFERENCES Customer ON DELETE CASCADE,
+	hotel_ID integer,
+	room_number integer,
+	check_in date NOT NULL,
+	check_out date NOT NULL,
+	FOREIGN KEY (room_number, hotel_ID) REFERENCES Room ON DELETE CASCADE
+)
+
+create table Bills(
+	billing_ID integer PRIMARY KEY,
+	rent_ID integer REFERENCES Rentings ON DELETE SET NULL,
+	cust_ID integer REFERENCES Customer ON DELETE RESTRICT,
+	amount numeric(8,2),
+	payment varchar(15),
+	check (payment in ('Credit', 'Debit', 'E-transfer', 'Cash', 'Bitcoin', 'Stock options', 'Goats', 'Land', 'Favours'))
+)
+
+create table Customer(
+	cust_ID integer PRIMARY KEY,
+	registration_date date,
+	DOB date,
+	ID_type varchar(20) NOT NULL,
+	ID varchar(30) NOT NULL,
+	first_name varchar(20),
+	last_name varchar(20) NOT NULL,
+	street_number integer,
+	street_name varchar(20),
+	city varchar(20),
+	province varchar(20),
+	postal_code char(6),
+	email_address varchar(20),
+	CHECK (postal_code = UPPER(postal_code) AND postal_code similar to '_[0-9]_[0-9]_[0-9]')
+)
+
+create table Phone_Numbers(
+	phone_number integer PRIMARY KEY,
+	chain_name varchar(20) REFERENCES Hotel_Chain,
+	hotel_ID integer REFERENCES Hotel,
+	emp_ID integer REFERENCES Hotel_Employee,
+	cust_ID integer REFERENCES Customer,
+	phone_type varchar(15),
+	check (CASE WHEN chain_name IS NOT NULL THEN 1 ELSE 0 END +
+        CASE WHEN hotel_ID IS NOT NULL THEN 1 ELSE 0 END +
+        CASE WHEN emp_ID IS NOT NULL THEN 1 ELSE 0 END +
+        CASE WHEN cust_ID IS NOT NULL THEN 1 ELSE 0 END = 1)
+)
+
+create table Bookings_Archive(
+	archive_ID bigserial PRIMARY KEY,
+	book_ID integer REFERENCES Bookings ON DELETE SET NULL,
+	cust_ID integer NOT NULL,
+	hotel_ID integer NOT NULL,
+	room_number integer NOT NULL,
+	check_in date NOT NULL,
+	check_out date NOT NULL
+)
+
+'''Trigger that creates booking archive'''
+CREATE OR REPLACE FUNCTION archive_booking()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO Bookings_Archive (book_ID, cust_ID, hotel_ID, room_number, check_in, check_out)
+    VALUES (NEW.book_ID, NEW.cust_ID, NEW.hotel_ID, NEW.room_number, NEW.check_in, NEW.check_out);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER archive_booking_trigger
+AFTER INSERT ON Bookings
+FOR EACH ROW
+EXECUTE FUNCTION archive_booking();
+
+create table Rentings_Archive(
+	archive_ID bigserial PRIMARY KEY,
+	rent_ID integer REFERENCES Rentings ON DELETE SET NULL,
+	cust_ID integer NOT NULL,
+	hotel_ID integer NOT NULL,
+	room_number integer NOT NULL,
+	check_in date NOT NULL,
+	check_out date NOT NULL
+)
+
+'''Trigger that creates booking archive'''
+CREATE OR REPLACE FUNCTION archive_renting()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO Rentings_Archive (rent_ID, cust_ID, hotel_ID, room_number, check_in, check_out)
+    VALUES (NEW.rent_ID, NEW.cust_ID, NEW.hotel_ID, NEW.room_number, NEW.check_in, NEW.check_out);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER archive_renting_trigger
+AFTER INSERT ON Rentings
+FOR EACH ROW
+EXECUTE FUNCTION archive_renting();
+
+create table User_Login(
+	usern varchar(30) PRIMARY KEY,
+	pass varchar(30) NOT NULL,
+	employee boolean NOT NULL
+)

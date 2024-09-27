@@ -1,0 +1,46 @@
+set search_path = 'Project'
+
+CREATE VIEW Availability_by_area AS
+Select count(*), city
+From Room natural join Hotel
+where available = true
+Group by city
+
+CREATE VIEW Capacity_by_Hotel AS
+Select sum(capacity), hotel_ID
+From Room natural join Hotel
+Group by hotel_ID
+
+CREATE VIEW Employee_Search AS
+Select chain_name, hotel_ID, first_name, last_name, title, email_address, phone_number
+From (Hotel Natural join (Role Natural Join 
+	  (Works Natural join 
+	  (select emp_ID, first_name, last_name, phone_number From Hotel_Employee Natural Join Phone_Numbers))))
+	 
+CREATE VIEW Room_Search AS
+Select hotel.hotel_ID, room_number, chain_name, price, city, star_rating, tv, ac, fridge, wifi, view, capacity, extendable
+From (Hotel Inner join 
+	  (select * from Room where available = 'true') as R2 
+	  ON Hotel.hotel_ID = R2.hotel_ID)
+
+CREATE VIEW Payment_Calculator AS
+SELECT (price * (check_out - check_in)) AS total_price, room_number, cust_ID, rent_ID
+FROM Room Natural Join Rentings
+
+CREATE INDEX ON Room(price)
+'''This index will be helpful for the customer searching view for 
+hotel rooms by price, as they will likely search for often'''
+
+CREATE INDEX ON Hotel(city)
+'''This index will work with the Room index to quicken the customer
+searching view for hotel rooms by city'''
+
+CREATE INDEX ON Bookings(hotel_ID)
+'''This index will allow fast search for bookings by a hotel employee
+to their hotel when checking a guest in'''
+
+CREATE INDEX ON User_Login(usern)
+'''This index will be helpful for quick login as it relies on searching
+by the username PK'''
+
+select * from Bookings where cust_ID = 21
