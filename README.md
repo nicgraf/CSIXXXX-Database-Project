@@ -1,3 +1,4 @@
+# CSI2132-Database-Project
 Hello! This project was for a class called Databases I (CSI2132) and it involved creating both the front end website and back end code for a hotel management and searching service.
 
 It's not super relevant to the field I would like to work in one day, bioinformatics and genomics, but I think it gives a good idea as to my formal training in coding and database management systems. I also coded this project completely on my own having to teach myself a lot, so I think it paints a good picture to what I can learn and am capable of.
