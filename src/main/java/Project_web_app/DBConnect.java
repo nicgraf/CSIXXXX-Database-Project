@@ -13,7 +13,7 @@ public class DBConnect{
     private static final String dbServerPort = "5432";
     private static final String dbName = "postgres";
     private static final String dbusername = "postgres";
-    private static final String dbpassword = "drowssap12";
+    private static final String dbpassword = "#######";
     private Connection con = null;
 
 
