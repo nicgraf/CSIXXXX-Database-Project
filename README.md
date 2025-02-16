@@ -9,4 +9,4 @@ There's essentially 3 parts:
 - Back end supporting java code for the scriptlets
 - SQL code that initialized the database tables, as well as the views, triggers, and indices (not originally in the project file)
 
-This code used Apache Tomcat to run the server on, and I think that's the only plug in used.
+This code used Apache Tomcat to run the server on.
